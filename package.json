@@ -18,10 +18,12 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "dev": "npm generateTSClient & npm run start & npm run mockServer",
-    "build": "react-scripts build",
+    "dev": "npm run generateSwagger:local & npm run generateTSClient & npm run start & npm run mockServer",
+    "build": "npm run generateSwagger & npm run generateTSClient & react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "generateSwagger": "node generate_yaml.js env=prod",
+    "generateSwagger:local": "node generate_yaml.js env=dev",
     "generateTSClient": "npx swagger-typescript-api -p ./swagger.yaml -o ./src -n api.ts",
     "mockServer": "prism mock -p 4010 ./swagger.yaml"
   },

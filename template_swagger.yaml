@@ -4,8 +4,7 @@ info:
   description: API documentation for the breathing project...
   version: "1.0"
 servers:
-  - url: "http://127.0.0.1:4010"
-    description: API server
+  - url: "{API_URL}"
 components:
   schemas:
     Exercise:
