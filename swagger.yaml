@@ -1,0 +1,149 @@
+openapi: 3.0.0
+info:
+  title: Breathing project
+  description: API documentation for the breathing project...
+  version: "1.0"
+servers:
+  - url: "http://127.0.0.1:4010"
+    description: API server
+components:
+  schemas:
+    Exercise:
+      type: object
+      properties:
+        level:
+          type: string
+          example: 'easy'
+          description: 'Exercise level'
+        date:
+          type: string
+          example: '2022-08-23T14:48:00'
+          description: 'Date'
+    Level:
+      type: object
+      properties:
+        name:
+          type: string
+          example: 'easy'
+          description: 'Exercise level'
+        inhale:
+          type: integer
+          example: 3000
+          description: 'The length of inhaling in ms'
+        exhale:
+          type: integer
+          example: 3000
+          description: 'The length of exhaling in ms'
+        duration:
+          type: integer
+          example: 60000          
+          description: 'Duration'
+    User: 
+      type: object
+      properties:
+        name:
+          type: string
+          example: 'Olivia'
+          description: 'Name of the user'
+        current_level: #Maybe all references to level should be an id?
+          type: string
+          example: 'easy'
+          description: 'Which level the user is currently at'
+  responses:
+    error:
+      description: ERROR
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                description: Describes the error in a human-readable format.
+                type: string
+                example: Permission denied.
+
+  parameters:
+    exercise:
+      name: id
+      in: query
+      required: true
+      description: The identifier of the exercise at hand.
+      schema:
+        type: string
+paths:
+  /exercises:
+    get:
+      summary: Get exercises
+      description: Get a history of exercises
+      parameters:
+        - in: query
+          name: limit
+          description: The number of items to return
+          schema: 
+            type: string
+            format: date
+            example: "2022-08-19"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/Exercise'
+    post:
+      summary: Complete a exercise
+      description: Information about what exercise a user has completed
+      parameters:
+        - name: level
+          in: query
+          description: Level of exercise.
+          schema:
+            type: string
+            example: medium #Unsure if we should send level, maybe picked up by BE
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    description: Returns the id of the new exercise.
+                    type: integer
+                    example: 23
+        '500':
+          $ref: '#/components/responses/error'
+  /levels:
+    get: 
+      summary: Get levels
+      description: Get all the levels and information about them
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/Level'
+
+  /users/current:
+    get:
+      summary: Get the current user
+      description: Get the current user and relevant info about them
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/User'
+                  example: 
+                    name: 'Olivia'
+                    current_level: 'easy'
+
+    
+      
