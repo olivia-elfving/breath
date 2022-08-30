@@ -1,5 +1,4 @@
-import { useRef } from 'react';
-import useScrollSnap from 'react-use-scroll-snap';
+import { useState } from 'react';
 import { toMinutes, toSeconds} from '../helpers/timeconverter';
 
 const levels = [
@@ -41,15 +40,24 @@ const levels = [
     }
 ]
 
+
 function Excersices() {
-    const scrollRef = useRef(null);
-    const { scrollIndex } = useScrollSnap({ ref: scrollRef, duration: 100, delay: 50 });
-    console.log(scrollIndex);
+
+    const [currentIndex, setCurrentIndex] = useState<number>(0);
+
+    const handleScroll = (event: React.UIEvent<HTMLDivElement>) => {
+        const width = event.currentTarget.scrollWidth / levels.length;
+        const scrollLeft = event.currentTarget.scrollLeft
+        const newIndex = scrollLeft / width;
+        if (Number.isInteger(newIndex)) {
+            setCurrentIndex(newIndex);
+        }
+    };
 
     return (
         <>
             <h1>Excersices</h1>
-            <div className='excersises'>
+            <div className='excersises' onScroll={handleScroll}>
                 {levels.map (level => ( 
                     <div className='excersice'>
                         <div>Imaginär bild av cirkeln</div>
@@ -59,7 +67,7 @@ function Excersices() {
                     </div>
                 ))}
             </div>    
-            <div ref={scrollRef}>
+            <div>
                 <span className="dot"></span>
                 <span className="dot"></span>
                 <span className="dot"></span>
@@ -67,6 +75,7 @@ function Excersices() {
                 <span className="dot"></span>
                 <span className="dot"></span>
             </div>
+            <h2>{currentIndex}</h2>
         </>
     )
 }
