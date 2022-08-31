@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { toMinutes, toSeconds} from '../helpers/timeconverter';
+import { toMinutes, toSeconds } from '../helpers/timeconverter';
 
 const levels = [
     {
@@ -55,7 +55,7 @@ function Excersices() {
         <>
             <h1>Excersices</h1>
             <div className='excersises' onScroll={handleScroll}>
-                {levels.map ((level, index) => ( 
+                {levels.map((level, index) => ( 
                     <div className='excersice' key={index}>
                         <div>Imaginär bild av cirkeln</div>
                         <h2>{level.name}</h2>
@@ -66,12 +66,9 @@ function Excersices() {
                 ))}
             </div>    
             <div>
-                <span className="dot">{count}</span>
-                <span className="dot"></span>
-                <span className="dot"></span>
-                <span className="dot"></span>
-                <span className="dot"></span>
-                <span className="dot"></span>
+                {levels.map((level, index) => (
+                    <span className="dot" style={{ background: count === index ? "red" : "grey" }}></span>
+                ))}
             </div>
         </>
     )
