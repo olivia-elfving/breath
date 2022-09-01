@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { countAction } from '../redux/counter';
 import { toMinutes, toSeconds } from '../helpers/timeconverter';
 
 const levels = [
@@ -41,13 +42,14 @@ const levels = [
 ]
 
 function Excersices() {
-    const [count, setCount] = useState(0);
+    const { count } = useSelector((state: any) => state.counter); // Ändra any 
+    const dispatch = useDispatch();
     const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
         const currentExcersise = e.currentTarget.scrollLeft;
         const totalExcersiseSize = e.currentTarget.scrollWidth;
         const newIndex = (currentExcersise/totalExcersiseSize)*levels.length;
         if (Number.isInteger(newIndex)) {
-            setCount(newIndex);
+            dispatch(countAction(newIndex));
         }
     };
 
@@ -58,6 +60,7 @@ function Excersices() {
                 {levels.map((level, index) => ( 
                     <div className='excersice' key={index}>
                         <div>Imaginär bild av cirkeln</div>
+                        <p>Glöm inte att skriva ngt om att andas med näsan (tidiga nivåer)</p>
                         <h2>{level.name}</h2>
                         <p className="breathTime">{toSeconds(level.inhale)}s inhale/ {toSeconds(level.exhale)}s exhale</p>
                         <p className="timer">{toMinutes(level.duration)}min</p>
