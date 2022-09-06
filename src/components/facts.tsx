@@ -2,8 +2,7 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 function Facts() {
-    const { count } = useSelector((state:any) => state.counter);
-    console.log("count_facts", count);
+    const { count } = useSelector((state:any) => state.counter); 
     return (
         <>
             <Link to = {`/authenticated`}>Excersices</Link>

@@ -45,7 +45,7 @@ const levels = [
 
 function Excersices() {
     const myRef = useRef<null | HTMLDivElement>(null);
-    const { count } = useSelector((state: any) => state.counter); // Ändra any 
+    const { count } = useSelector((state: any) => state.counter);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -86,7 +86,7 @@ function Excersices() {
             </div>    
             <div>
                 {levels.map((level, index) => (
-                    <span className="dot" style={{ background: count === index ? "red" : "grey" }}></span>
+                    <span className="dot" key={index} style={{ background: count === index ? "red" : "grey" }}></span>
                 ))}
             </div>
         </>
